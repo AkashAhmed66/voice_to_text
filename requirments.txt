@@ -1,0 +1,7 @@
+flask
+banglaspeech2text
+torch 
+torchaudio
+werkzeug
+openai
+python-dotenv

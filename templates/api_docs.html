@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation | Bangla Audio Transcription</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .api-docs {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .api-section {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+            border: 1px solid #e2e8f0;
+        }
+        .api-section h2 {
+            color: #1e293b;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .api-section h3 {
+            color: #374151;
+            margin: 1.5rem 0 1rem;
+            font-size: 1.2rem;
+        }
+        .method {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin-right: 1rem;
+            background: #10b981;
+            color: white;
+        }
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .nav-link {
+            padding: 0.75rem 1.5rem;
+            background: #64748b;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover {
+            background: #475569;
+            transform: translateY(-1px);
+        }
+        .postman-steps {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+        .postman-steps ol {
+            margin: 0;
+            padding-left: 1.5rem;
+        }
+        .postman-steps li {
+            margin-bottom: 0.5rem;
+        }
+        .endpoint-info {
+            background: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-code"></i>
+                    <h1>API Documentation</h1>
+                </div>
+                <p class="subtitle">Bangla Audio Transcription API Reference</p>
+            </div>
+        </header>
+
+        <main class="api-docs">
+            <div class="nav-links">
+                <a href="/" class="nav-link">
+                    <i class="fas fa-arrow-left"></i> Back to App
+                </a>
+            </div>
+
+            <div class="api-section">
+                <h2><i class="fas fa-rocket"></i> Getting Started</h2>
+                <p>The Bangla Audio Transcription API provides powerful speech-to-text conversion for Bangla audio files with AI-powered text refinement.</p>
+                
+                <div class="endpoint-info">
+                    <h3><i class="fas fa-server"></i> Base URL</h3>
+                    <div class="code-block">{{ base_url }}</div>
+                    
+                    <h3><i class="fas fa-file-audio"></i> Supported Formats</h3>
+                    <p><strong>Audio:</strong> WAV, MP3, M4A | <strong>Max Size:</strong> 50MB</p>
+                </div>
+            </div>
+
+            <div class="api-section">
+                <h2><i class="fas fa-upload"></i> Audio Transcription</h2>
+                <div>
+                    <div>
+                        <span class="method">POST</span>
+                        <strong>/api/transcribe</strong>
+                    </div>
+                    <p>Transcribe Bangla audio file to text with AI enhancement.</p>
+                    
+                    <h3><i class="fas fa-terminal"></i> cURL Request</h3>
+                    <div class="code-block">curl -X POST {{ base_url }}/api/transcribe \
+  -F "audio=@your_audio_file.wav" \
+  -H "Content-Type: multipart/form-data"</div>
+                    
+                    <h3><i class="fas fa-rocket"></i> Postman Setup</h3>
+                    <div class="postman-steps">
+                        <ol>
+                            <li><strong>Open Postman</strong> and create a new request</li>
+                            <li><strong>Set Method:</strong> Select <code>POST</code> from the dropdown</li>
+                            <li><strong>Set URL:</strong> Enter <code>{{ base_url }}/api/transcribe</code></li>
+                            <li><strong>Go to Body tab:</strong> Select <code>form-data</code></li>
+                            <li><strong>Add File Parameter:</strong>
+                                <ul style="margin-top: 0.5rem;">
+                                    <li>Key: <code>audio</code></li>
+                                    <li>Type: Select <code>File</code> from dropdown</li>
+                                    <li>Value: Click "Select Files" and choose your audio file</li>
+                                </ul>
+                            </li>
+                            <li><strong>Send Request:</strong> Click the blue "Send" button</li>
+                        </ol>
+                    </div>
+                    
+                    <h3><i class="fas fa-check-circle"></i> Success Response</h3>
+                    <div class="code-block">{
+  "success": true,
+  "data": {
+    "transcription": "আপনার উন্নত বাংলা টেক্সট",
+    "original_transcription": "আপনার মূল বাংলা টেক্সট",
+    "refined": true,
+    "filename": "audio.wav"
+  }
+}</div>
+
+                    <h3><i class="fas fa-exclamation-circle"></i> Error Response</h3>
+                    <div class="code-block">{
+  "success": false,
+  "error": "No file uploaded"
+}</div>
+                </div>
+            </div>
+
+            <div class="api-section">
+                <h2><i class="fas fa-exclamation-triangle"></i> Error Codes</h2>
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr style="background: #f8fafc;">
+                        <th style="padding: 0.75rem; text-align: left; border: 1px solid #e2e8f0;">HTTP Status</th>
+                        <th style="padding: 0.75rem; text-align: left; border: 1px solid #e2e8f0;">Description</th>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.75rem; border: 1px solid #e2e8f0;">200</td>
+                        <td style="padding: 0.75rem; border: 1px solid #e2e8f0;">Success - Audio transcribed successfully</td>
+                    </tr>
+                    <tr style="background: #f8fafc;">
+                        <td style="padding: 0.75rem; border: 1px solid #e2e8f0;">400</td>
+                        <td style="padding: 0.75rem; border: 1px solid #e2e8f0;">Bad Request - Invalid file format, no file uploaded, or file too large</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.75rem; border: 1px solid #e2e8f0;">500</td>
+                        <td style="padding: 0.75rem; border: 1px solid #e2e8f0;">Server Error - Processing failed or model unavailable</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="api-section">
+                <h2><i class="fas fa-lightbulb"></i> Usage Tips</h2>
+                <ul>
+                    <li><strong>Audio Quality:</strong> Use clear, high-quality recordings for best results</li>
+                    <li><strong>File Size:</strong> Keep files under 50MB for optimal processing speed</li>
+                    <li><strong>Language:</strong> API is optimized for Bangla/Bengali language</li>
+                    <li><strong>Processing Time:</strong> Typical response time is 10-30 seconds depending on audio length</li>
+                    <li><strong>AI Enhancement:</strong> The API automatically refines transcribed text for better accuracy</li>
+                </ul>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2025 Bangla Speech Transcription API. Built with advanced AI technology.</p>
+                <div class="footer-links">
+                    <a href="/"><i class="fas fa-home"></i> Home</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

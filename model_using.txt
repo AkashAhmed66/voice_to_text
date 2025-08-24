@@ -1,0 +1,15 @@
+better so far
+
+pip install banglaspeech2text
+
+from banglaspeech2text import Speech2Text
+stt = Speech2Text("small")  # or "base" for lighter use
+transcription = stt.recognize("/content/voice_to_text.m4a")
+print(transcription)
+
+
+
+wav2vec2-xlsr-bengali
+
+
+

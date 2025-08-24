@@ -1,0 +1,6 @@
+run application:
+python -m flask --app .\app.py run
+
+debugger mood on:
+$env:FLASK_DEBUG="1"
+flask run

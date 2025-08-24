@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bangla Audio Transcription | AI-Powered Speech to Text</title>
+    <meta name="description" content="Convert Bangla audio files to text with high accuracy using advanced AI technology. Support for WAV, MP3, and M4A formats.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎤</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div class="header-nav">
+                    <a href="/api/docs" class="api-link">
+                        <i class="fas fa-code"></i> API Docs
+                    </a>
+                </div>
+                <div class="logo">
+                    <i class="fas fa-microphone-alt"></i>
+                    <h1>Bangla Speech Transcription</h1>
+                </div>
+                <p class="subtitle">Transform your Bangla audio into accurate text with cutting-edge AI technology</p>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="upload-section">
+                <div class="upload-container">
+                    <form id="transcriptionForm" enctype="multipart/form-data">
+                        <div class="file-upload-wrapper">
+                            <div class="file-upload-area" id="fileUploadArea">
+                                <div class="upload-icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <div class="upload-text">
+                                    <h3>Upload your audio file</h3>
+                                    <p>Drag and drop or click to browse</p>
+                                    <span class="file-types">Supports: WAV, MP3, M4A (Max 50MB)</span>
+                                </div>
+                                <input type="file" id="audioFile" name="audio" accept=".wav,.mp3,.m4a" required>
+                            </div>
+                            
+                            <div class="file-info" id="fileInfo" style="display: none;">
+                                <div class="file-details">
+                                    <i class="fas fa-file-audio"></i>
+                                    <div class="file-text">
+                                        <span class="file-name" id="fileName"></span>
+                                        <span class="file-size" id="fileSize"></span>
+                                    </div>
+                                    <button type="button" class="remove-file" id="removeFile">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="transcribe-btn" id="transcribeBtn" disabled>
+                            <span class="btn-text">
+                                <i class="fas fa-waveform-lines"></i>
+                                Start Transcription
+                            </span>
+                            <span class="btn-loading" style="display: none;">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                Processing Audio...
+                            </span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="results-section" id="resultsSection" style="display: none;">
+                <div class="results-container">
+                    <div class="results-header">
+                        <h2><i class="fas fa-file-alt"></i> Transcription Result</h2>
+                        <button class="copy-btn" id="copyBtn" title="Copy refined text to clipboard">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Refined Transcription (Main) -->
+                    <div class="transcription-section">
+                        <div class="section-header">
+                            <h3><i class="fas fa-magic"></i> AI-Refined Text</h3>
+                            <span class="quality-badge">Enhanced</span>
+                        </div>
+                        <div class="transcription-output refined" id="transcriptionOutput">
+                            <!-- Refined transcription text will appear here -->
+                        </div>
+                    </div>
+
+                    <!-- Original Transcription (Collapsible) -->
+                    <div class="transcription-section original-section" id="originalSection" style="display: none;">
+                        <div class="section-header">
+                            <h3><i class="fas fa-microphone"></i> Original Transcription</h3>
+                            <span class="quality-badge original">Raw</span>
+                        </div>
+                        <div class="transcription-output original" id="originalOutput">
+                            <!-- Original transcription text will appear here -->
+                        </div>
+                    </div>
+
+                    <!-- Toggle Button -->
+                    <button class="toggle-original-btn" id="toggleOriginalBtn">
+                        <i class="fas fa-eye"></i>
+                        Show Original Transcription
+                    </button>
+
+                    <div class="results-actions">
+                        <button class="action-btn secondary" id="newTranscriptionBtn">
+                            <i class="fas fa-plus"></i>
+                            New Transcription
+                        </button>
+                        <button class="action-btn primary" id="downloadBtn">
+                            <i class="fas fa-download"></i>
+                            Download Text
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="error-section" id="errorSection" style="display: none;">
+                <div class="error-container">
+                    <div class="error-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="error-message" id="errorMessage">
+                        <!-- Error message will appear here -->
+                    </div>
+                    <button class="action-btn secondary" id="tryAgainBtn">
+                        <i class="fas fa-redo"></i>
+                        Try Again
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2025 Bangla Speech Transcription. Built with advanced AI technology.</p>
+                <div class="footer-links">
+                    <a href="#" aria-label="About us"><i class="fas fa-info-circle"></i> About</a>
+                    <a href="#" aria-label="Privacy policy"><i class="fas fa-shield-alt"></i> Privacy</a>
+                    <a href="#" aria-label="Contact support"><i class="fas fa-envelope"></i> Support</a>
+                    <a href="#" aria-label="GitHub repository"><i class="fab fa-github"></i> GitHub</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
